@@ -9,7 +9,7 @@ def Load_F(filename):
         mesh = __dmd_mesh(); material = __dmd_material(); texture = __dmd_texture()
     model = dmd_model()
     print("OK")
-    mesh_inited, mat_inited, texture_inited    = False, False, False
+    mesh_inited, mat_inited, normals_inited, texture_inited    = False, False, False, False
     for i in range(len(tmp_data)):
         if not mesh_inited      and "TriMesh"       in tmp_data[i]: mesh_inited = i
         if not normals_inited   and "Smooth normals:"       in tmp_data[i]: normals_inited = i
