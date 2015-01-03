@@ -40,13 +40,15 @@ def Load_F(filename):
     if texture_inited:
         model.texture.vertnum, model.texture.facenum = [int(i) for i in (tmp_data[texture_inited + 2]).split()]
         for i in range(model.texture.vertnum):
-            model.texture.verts.append(tuple( [float(i) for i in(tmp_data[texture_inited + 4 + i]).split()]))
+            tmp_uv_tuple = [float(i) for i in(tmp_data[texture_inited + 4 + i]).split()]
+            trimmed_uv = tuple((tmp_uv_tuple[0], tmp_uv_tuple[1])) # Cut_off 3-th coordinate
+            model.texture.verts.append(trimmed_uv)
         for i in range(model.texture.facenum):
             model.texture.faces.append(tuple([int(i)-1 for i in (tmp_data[texture_inited + 3 + model.texture.vertnum + 3 + i]).split()]))
     return model
             
-#filename = r"C:\tmp\zdsim\routes\Шевченко-Пятихатки_2_0\models\tracks\1track.dmd"
-filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\tracks\1track.dmd"
+filename = r"C:\tmp\zdsim\routes\Шевченко-Пятихатки_2_0\models\tracks\1track.dmd"
+#filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\tracks\1track.dmd"
 mesh_name = os.path.splitext(os.path.basename(filename))[0]
 dmd_raw = Load_F(filename)
 me = bpy.data.meshes.new(mesh_name)
