@@ -51,6 +51,6 @@ mesh_name = os.path.splitext(os.path.basename(filename))[0]
 dmd_raw = Load_F(filename)
 me = bpy.data.meshes.new(mesh_name)
 me.from_pydata(dmd_raw.mesh.verts, [], dmd_raw.mesh.faces)
-me.update()
+me.update(False, True)
 ob = bpy.data.objects.new(mesh_name, me)
 bpy.context.scene.objects.link(ob)
