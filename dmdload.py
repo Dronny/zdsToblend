@@ -22,7 +22,7 @@ def Load_F(filename):
         for i in range(model.mesh.vertnum):
             model.mesh.verts.append(tuple([float(i) for i in (tmp_data[mesh_inited + 4 + i]).split()]))
         for i in range(model.mesh.facenum):
-            model.mesh.faces.append(tuple([int(i) for i in (tmp_data[mesh_inited + 3 + model.mesh.vertnum + 3 + i]).split()]))
+            model.mesh.faces.append(tuple([int(i)-1 for i in (tmp_data[mesh_inited + 3 + model.mesh.vertnum + 3 + i]).split()]))
         if normals_inited:
             for i in range(model.mesh.vertnum):
                 model.mesh.normals.append(tuple([float(i) for i in (tmp_data[normals_inited + 1 + i]).split()]))
@@ -42,7 +42,7 @@ def Load_F(filename):
         for i in range(model.texture.vertnum):
             model.texture.verts.append(tuple( [float(i) for i in(tmp_data[texture_inited + 4 + i]).split()]))
         for i in range(model.texture.facenum):
-            model.texture.faces.append(tuple([int(i) for i in (tmp_data[texture_inited + 3 + model.texture.vertnum + 3 + i]).split()]))
+            model.texture.faces.append(tuple([int(i)-1 for i in (tmp_data[texture_inited + 3 + model.texture.vertnum + 3 + i]).split()]))
     return model
             
 #filename = r"C:\tmp\zdsim\routes\Шевченко-Пятихатки_2_0\models\tracks\1track.dmd"
@@ -50,7 +50,7 @@ filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\
 mesh_name = os.path.splitext(os.path.basename(filename))[0]
 dmd_raw = Load_F(filename)
 me = bpy.data.meshes.new(mesh_name)
-ob = bpy.data.objects.new(mesh_name, me)
-bpy.context.scene.objects.link(ob)
 me.from_pydata(dmd_raw.mesh.verts, [], dmd_raw.mesh.faces)
 me.update()
+ob = bpy.data.objects.new(mesh_name, me)
+bpy.context.scene.objects.link(ob)
