@@ -56,3 +56,13 @@ me.from_pydata(dmd_raw.mesh.verts, [], dmd_raw.mesh.faces)
 me.update(False, True)
 ob = bpy.data.objects.new(mesh_name, me)
 bpy.context.scene.objects.link(ob)
+
+texFaces = []
+for i in dmd_raw.texture.faces:
+    texFaces.append(dmd_raw.texture.verts[i[0]])
+    texFaces.append(dmd_raw.texture.verts[i[1]])
+    texFaces.append(dmd_raw.texture.verts[i[2]])
+me.uv_textures.new('uv')
+for i in range(len(me.uv_layers.active.data)):
+    me.uv_layers.active.data[i].uv = texFaces[i]
+me.update(False, True)
