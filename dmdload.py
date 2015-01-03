@@ -45,24 +45,23 @@ def Load_F(filename):
             model.texture.verts.append(trimmed_uv)
         for i in range(model.texture.facenum):
             model.texture.faces.append(tuple([int(i)-1 for i in (tmp_data[texture_inited + 3 + model.texture.vertnum + 3 + i]).split()]))
-    return model
-            
-filename = r"C:\tmp\zdsim\routes\Шевченко-Пятихатки_2_0\models\tracks\1track.dmd"
-#filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\tracks\1track.dmd"
-mesh_name = os.path.splitext(os.path.basename(filename))[0]
-dmd_raw = Load_F(filename)
-me = bpy.data.meshes.new(mesh_name)
-me.from_pydata(dmd_raw.mesh.verts, [], dmd_raw.mesh.faces)
-me.update(False, True)
-ob = bpy.data.objects.new(mesh_name, me)
-bpy.context.scene.objects.link(ob)
+    dmd_raw = model
+    #============= Blender specific: ==========================#
+    mesh_name = os.path.splitext(os.path.basename(filename))[0]
+    me = bpy.data.meshes.new(mesh_name)
+    me.from_pydata(dmd_raw.mesh.verts, [], dmd_raw.mesh.faces)
+    me.update(False, True)
+    ob = bpy.data.objects.new(mesh_name, me)
+    bpy.context.scene.objects.link(ob)
+    texFaces = []
+    for i in dmd_raw.texture.faces:    texFaces.append(dmd_raw.texture.verts[i[0]]); texFaces.append(dmd_raw.texture.verts[i[1]]);  texFaces.append(dmd_raw.texture.verts[i[2]])
+    me.uv_textures.new('uv')
+    for i in range(len(me.uv_layers.active.data)):  me.uv_layers.active.data[i].uv = texFaces[i]
+    me.update(False, True)
 
-texFaces = []
-for i in dmd_raw.texture.faces:
-    texFaces.append(dmd_raw.texture.verts[i[0]])
-    texFaces.append(dmd_raw.texture.verts[i[1]])
-    texFaces.append(dmd_raw.texture.verts[i[2]])
-me.uv_textures.new('uv')
-for i in range(len(me.uv_layers.active.data)):
-    me.uv_layers.active.data[i].uv = texFaces[i]
-me.update(False, True)
+
+            
+#filename = r"C:\tmp\zdsim\routes\Шевченко-Пятихатки_2_0\models\tracks\1track.dmd"
+#filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\tracks\1track.dmd"
+filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\evropa.dmd"
+Load_F(filename)
