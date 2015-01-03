@@ -23,9 +23,9 @@ def Load_F(filename):
             model.mesh.verts.append(tuple([float(i) for i in (tmp_data[mesh_inited + 4 + i]).split()]))
         for i in range(model.mesh.facenum):
             model.mesh.faces.append(tuple([int(i) for i in (tmp_data[mesh_inited + 3 + model.mesh.vertnum + 3 + i]).split()]))
-    if normals_inited:
-        for i in range(model.mesh.vertnum):
-            model.mesh.normals.append(tuple([float(i) for i in (tmp_data[normals_inited + 1 + i]).split()]))
+        if normals_inited:
+            for i in range(model.mesh.vertnum):
+                model.mesh.normals.append(tuple([float(i) for i in (tmp_data[normals_inited + 1 + i]).split()]))
     if mat_inited:
         for i in (range(len(tmp_data)))[mat_inited:] :
             if "diffuse color" in tmp_data[i]: model.material.diff_col = [int(i) for i in (tmp_data[i + 1]).split()]
@@ -50,7 +50,7 @@ filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\
 mesh_name = os.path.splitext(os.path.basename(filename))[0]
 dmd_raw = Load_F(filename)
 me = bpy.data.meshes.new(mesh_name)
-me.from_pydata(dmd_raw.mesh.verts, [], dmd_raw.mesh.faces)
-me.update()
 ob = bpy.data.objects.new(mesh_name, me)
 bpy.context.scene.objects.link(ob)
+me.from_pydata(dmd_raw.mesh.verts, [], dmd_raw.mesh.faces)
+me.update()
