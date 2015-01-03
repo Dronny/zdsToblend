@@ -12,6 +12,7 @@ def Load_F(filename):
     mesh_inited, mat_inited, texture_inited    = False, False, False
     for i in range(len(tmp_data)):
         if not mesh_inited      and "TriMesh"       in tmp_data[i]: mesh_inited = i
+        if not normals_inited   and "Smooth normals:"       in tmp_data[i]: normals_inited = i
         if not mat_inited       and "Material"      in tmp_data[i]: mat_inited = i
         if not texture_inited   and "New Texture"   in tmp_data[i]: texture_inited = i
     if mesh_inited:
@@ -20,6 +21,9 @@ def Load_F(filename):
             model.mesh.verts.append(tuple([float(i) for i in (tmp_data[mesh_inited + 4 + i]).split()]))
         for i in range(model.mesh.facenum):
             model.mesh.faces.append(tuple([int(i) for i in (tmp_data[mesh_inited + 3 + model.mesh.vertnum + 3 + i]).split()]))
+    if normals_inited:
+        for i in range(model.mesh.vertnum):
+            model.mesh.normals.append(tuple([float(i) for i in (tmp_data[normals_inited + 1 + i]).split()]))
     if mat_inited:
         for i in (range(len(tmp_data)))[mat_inited:] :
             if "diffuse color" in tmp_data[i]: model.material.diff_col = [int(i) for i in (tmp_data[i + 1]).split()]
@@ -37,7 +41,6 @@ def Load_F(filename):
             model.texture.verts.append(tuple( [float(i) for i in(tmp_data[texture_inited + 4 + i]).split()]))
         for i in range(model.texture.facenum):
             model.texture.faces.append(tuple([int(i) for i in (tmp_data[texture_inited + 3 + model.texture.vertnum + 3 + i]).split()]))
-    print(model.texture.faces)
     return model
             
 
