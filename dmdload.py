@@ -1,3 +1,5 @@
+import bpy, os
+
 def Load_F(filename):
     tmp_data = []
     with open(filename) as f:
@@ -43,6 +45,9 @@ def Load_F(filename):
             model.texture.faces.append(tuple([int(i) for i in (tmp_data[texture_inited + 3 + model.texture.vertnum + 3 + i]).split()]))
     return model
             
-
-
-Load_F(r"C:\tmp\zdsim\routes\Шевченко-Пятихатки_2_0\models\tracks\1track.dmd")
+filename = r"C:\tmp\zdsim\routes\Шевченко-Пятихатки_2_0\models\tracks\1track.dmd"
+mesh_name = os.path.splitext(os.path.basename(filename))[0]
+dmd_raw = Load_F(filename)
+me = bpy.data.mesh.new(mesh_name)
+me.from_pydata(dmd_raw.mesh.verts, [], dmd_raw.mesh.faces)
+me.update()
