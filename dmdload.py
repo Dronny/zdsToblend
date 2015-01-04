@@ -46,7 +46,7 @@ def Load_F(filename, inverted=False):
             model.texture.vertnum, model.texture.facenum = [int(i) for i in (tmp_data[texture_inited + 2]).split()]
             for i in range(model.texture.vertnum):
                 tmp_uv_tuple = [float(i) for i in(tmp_data[texture_inited + 4 + i]).split()]
-                trimmed_uv = tuple(( tmp_uv_tuple[0], 1 + (inverted * tmp_uv_tuple[1]) )) # Cut_off 3-th coordinate
+                trimmed_uv = tuple(( tmp_uv_tuple[0],  (inverted * tmp_uv_tuple[1]) )) # Cut_off 3-th coordinate
                 model.texture.verts.append(trimmed_uv)
             for i in range(model.texture.facenum):
                 model.texture.faces.append(tuple([int(i)-1 for i in (tmp_data[texture_inited + 3 + model.texture.vertnum + 3 + i]).split()]))
@@ -71,4 +71,4 @@ def Load_F(filename, inverted=False):
 #filename = r"C:\tmp\zdsim\routes\Шевченко-Пятихатки_2_0\models\tracks\1track.dmd"
 #filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\tracks\1track.dmd"
 filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\v_forest1l.dmd"
-Load_F(filename, True)
+Load_F(filename)
