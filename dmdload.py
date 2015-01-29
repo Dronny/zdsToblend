@@ -72,3 +72,26 @@ def Load_F(filename, inverted=False):
 #filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\tracks\1track.dmd"
 filename = r"D:\Program Files\ZDSimulator\routes\Москва-Калуга2_1_0\models\v_forest1l.dmd"
 Load_F(filename)
+-------------------
+class ne:
+    content = ""
+    tags = []
+    filename = ""
+
+import  os
+filesindir  = os.listdir()
+news_list = []
+for news in filesindir:
+    if (".txt" in news[-4:]) :
+        tmp = ne()
+        tmp.filename = news
+        tmp.content = (open( news, "r").read()).split("\n")
+        for i in tmp.content:
+            if ("tags:" in i ):
+                tmp.tags = i.split(",")
+                i = "0"
+                for ii in tmp.tags: ii = ii.strip()
+        news_list.append(tmp)
+        print(tmp.filename)
+        print(tmp.content)
+        print(tmp.tags)
