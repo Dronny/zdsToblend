@@ -52,3 +52,11 @@ docs/_build/
 
 # PyBuilder
 target/
+hz2.pro.user
+release/stdout.txt
+hz2/deployment.pri
+Makefile
+release/hz2.exe
+Makefile.Debug
+Makefile.Release
+release/main.o
